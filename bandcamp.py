@@ -25,6 +25,7 @@ import urllib.request
 import re
 import json
 import math
+import os
 from datetime import datetime, date, time
 try:
 	import stagger
@@ -33,6 +34,14 @@ try:
 except:
 	print("[Error] Can't import stagger, will skip mp3 tagging.")
 	can_tag = False
+
+url = sys.argv[1]
+artist = re.findall("http://([^.]*).bandcamp", url)[0]
+album =  re.findall("/album/(.*)", url)[0]
+dir = os.environ["HOME"] + "/Music/" + artist + "/" + album
+os.makedirs(dir, exist_ok=True)
+os.chdir(dir)
+
 
 # Download a file and show its progress.
 # Taken from http://stackoverflow.com/questions/22676/how-do-i-download-a-file-over-http-using-python
